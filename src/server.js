@@ -1,6 +1,8 @@
 const jsonServer = require('json-server');
 const server = jsonServer.create();
-const router = jsonServer.router('db.json');
+const path = require('path');
+const pathres = path.resolve(__dirname, 'db.json');
+const router = jsonServer.router(pathres);
 const middlewares = jsonServer.defaults();
 const bodyParser = require('body-parser');
 const authRoutes = require('./auth-routes');

@@ -1,6 +1,8 @@
 const uuidV1 = require('uuid/v1');
 const fs = require('fs');
-const dbData = JSON.parse(fs.readFileSync('db.json', 'utf8'));
+const path = require('path');
+const pathres = path.resolve(__dirname, 'db.json');
+const dbData = JSON.parse(fs.readFileSync(pathres, 'utf8'));
 const users = dbData.users;
 
 const sessionTokenName = 'session-token';
@@ -54,6 +56,7 @@ function login(req, res, next) {
     const newSessionToken = uuidV1();
     authorizedUsers[login] = newSessionToken;
     res.set(sessionTokenName, newSessionToken);
+    res.set('Access-Control-Expose-Headers', sessionTokenName);
     res.sendStatus(200);
 }
 function logout(req, res, next) {
